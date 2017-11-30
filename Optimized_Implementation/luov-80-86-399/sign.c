@@ -1,15 +1,23 @@
 #include "LUOV.h"
 
+#ifdef KAT
+	#define printIntermediateValue(A) printf(A)
+#else
+	#define printIntermediateValue(A) 
+#endif
+
 /*
 	Generates a new keypair
 
 	pk : char array that receives the new public key
 	sk : char array that receives the new secret key
 */
-int crypto_sign_keypair(unsigned char *pk, unsigned char *sk) {
+int crypto_sign_keypair(unsigned char *pk, unsigned char *sk) 
+{
 	writer W;
 	PublicKey PK;
 	SecretKey SK;
+	printIntermediateValue("--- Start keygen ---\n");
 
 	// Generate key pair
 	generateKeyPair(&PK , &SK);
@@ -25,6 +33,8 @@ int crypto_sign_keypair(unsigned char *pk, unsigned char *sk) {
 	// Free up memory
 	destroy_SecretKey(&SK);
 	destroy_PublicKey(&PK);
+
+	printIntermediateValue("--- End keygen ---\n");
 	return 0;
 }
 
@@ -44,6 +54,7 @@ int crypto_sign(unsigned char *sm, unsigned long long *smlen, const unsigned cha
 	reader R = newReader(sk);
 	writer W = newWriter(sm);
 	Signature signature;
+	printIntermediateValue("--- Start signing ---\n");
 
 	// If not the entire mesage can be recovered from a signature, we copy the first part to sm.
 	if( mlen > RECOVERED_PART_MESSAGE ){
@@ -65,6 +76,8 @@ int crypto_sign(unsigned char *sm, unsigned long long *smlen, const unsigned cha
 	// Free up memory
 	destroy_signature(&signature);
 	destroy_SecretKey(&skey);
+
+	printIntermediateValue("--- End signing ---\n");
 
 	return 0;
 }
@@ -89,6 +102,8 @@ int crypto_sign_open(unsigned char *m, unsigned long long *mlen, const unsigned 
 	PublicKey pkey;
 	Signature signature;
 
+	printIntermediateValue("--- Start verifying ---\n");
+
 	// Read public key
 	deserialize_PublicKey(&PKR, &pkey);
 
@@ -106,6 +121,8 @@ int crypto_sign_open(unsigned char *m, unsigned long long *mlen, const unsigned 
 	// Free up memory
 	destroy_signature(&signature);
 	destroy_PublicKey(&pkey);
+
+	printIntermediateValue("--- End verifying ---\n");
 
 	return valid;
 }
