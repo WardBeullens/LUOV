@@ -102,6 +102,11 @@ int crypto_sign_open(unsigned char *m, unsigned long long *mlen, const unsigned 
 	PublicKey pkey;
 	Signature signature;
 
+	// reject if signature is too short
+	if(smlen<CRYPTO_BYTES){
+            return -1;
+	}
+
 	printIntermediateValue("--- Start verifying ---\n");
 
 	// Read public key
