@@ -4,8 +4,6 @@ import math
 OMEGA = 2
 #Maximal bit-depth of a Quantum computation 
 MAXDEPTH = 64
-#Extra security margin
-MARGIN = 1.1
 
 def binom(n,k):
 	if k<0 or k>n:
@@ -118,10 +116,10 @@ def chooseParams(r,l,lq = 0):
 
     SummarizeAttacks(r,m,v)
 
-chooseParams(48,146*MARGIN)
-chooseParams(64,210*MARGIN)
-chooseParams(80,272*MARGIN,(298-MAXDEPTH)*MARGIN)
+chooseParams(48,146)
+chooseParams(64,210)
+chooseParams(80,272,298-MAXDEPTH)
 
-chooseParams(8,146*MARGIN)
-chooseParams(8,210*MARGIN)
-chooseParams(8,272*MARGIN ,(298-MAXDEPTH)*MARGIN)
+chooseParams(8,146)
+chooseParams(8,210)
+chooseParams(8,272 ,298-MAXDEPTH)
