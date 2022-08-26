@@ -1,3 +1,5 @@
+# !Warning! Some of the parameter sets are not secure. https://eprint.iacr.org/2020/967
+
 ## compiling and running KAT generation and the test program
 
 Generating the KAT values is as simple as navigating to the desired implementation in a subdirectory of 
